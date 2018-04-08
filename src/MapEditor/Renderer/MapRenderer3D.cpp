@@ -1520,6 +1520,13 @@ void MapRenderer3D::updateLine(unsigned index)
 		quad.fogcolour = fogcolour1;
 		quad.light = light1;
 		quad.texture = MapEditor::textureManager().getTexture(line->s1()->getTexUpper(), mixed);
+
+		// Hack to show upper unpegged Textures with the right offset, as gzdoom handles it
+		if (!upeg)
+		{
+			yoff -= (quad.texture->getHeight())*(1 - sy);
+		}
+
 		setupQuadTexCoords(&quad, length, xoff, yoff, ceiling1, ceiling2, !upeg, sx, sy);
 		// Sky hack only applies if both sectors have a sky ceiling
 		if (S_CMPNOCASE(sky_flat, line->frontSector()->getCeilingTex()) && S_CMPNOCASE(sky_flat, line->backSector()->getCeilingTex())) quad.flags |= SKY;
@@ -1691,6 +1698,13 @@ void MapRenderer3D::updateLine(unsigned index)
 		quad.fogcolour = fogcolour2;
 		quad.light = light2;
 		quad.texture = MapEditor::textureManager().getTexture(line->s2()->getTexUpper(), mixed);
+
+		// Hack to show upper unpegged Textures with the right offset, as gzdoom handles it
+		if (!upeg)
+		{
+			yoff -= (quad.texture->getHeight())*(1 - sy);
+		}
+
 		setupQuadTexCoords(&quad, length, xoff, yoff, ceiling2, ceiling1, !upeg, sx, sy);
 		if (S_CMPNOCASE(sky_flat, line->frontSector()->getCeilingTex())) quad.flags |= SKY;
 		quad.flags |= BACK;
