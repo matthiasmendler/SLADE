@@ -1121,6 +1121,10 @@ bool Input::updateCamera3d(double mult) const
 	// --- Check for held-down keys ---
 	bool moving = false;
 	double speed = shift_down_ ? mult * 8 : mult * 4;
+	if (alt_down_)
+	{
+		speed = mult / 4;
+	}
 	auto& r3d = context_.renderer().renderer3D();
 
 	// Camera forward
